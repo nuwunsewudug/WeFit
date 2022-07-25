@@ -1,4 +1,6 @@
 import { createStore } from 'vuex'
+import accounts from './modules/accounts'
+// import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
   state: {
@@ -9,6 +11,8 @@ export default createStore({
   },
   actions: {
     },
-  modules: {
-  }
+  modules: { accounts },
+    // plugins: [
+    //   createPersistedState()
+    // ]
 })
