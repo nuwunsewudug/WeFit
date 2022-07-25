@@ -23,7 +23,7 @@ export default {
   actions: {
     saveToken({ commit }, token) {
       commit('SET_TOKEN', token)
-      localStorage.setItem('token')
+      localStorage.setItem('token', token)
     },
     
     login({ commit, dispatch }, userData) {
@@ -33,33 +33,36 @@ export default {
             data: userData
           })
             .then(res => {
-              const token = res.data.key
+              console.log(res.data.token)
+              const token = res.data.token
+              
               dispatch('saveToken', token)
               dispatch('fetchCurrentUser')
               router.push({ name: 'HomeView' })
             })
             .catch(err => {
-              console.error(err.response.data)
-              commit('SET_AUTH_ERROR', err.response.data)
+              console.log(err)
+              console.error(err)
+              commit('SET_AUTH_ERROR', err)
             })
     },
 
-    fetchCurrentUser({ commit, getters, dispatch }) {
-      if (getters.isLoggedIn) {
-        axios({
-          url: drf.accounts.currentUserInfo(),
-          method: 'get',
-          headers: getters.authHeader,
-        })
-          .then(res => commit('SET_CURRENT_USER', res.data))
-          .catch(err => {
-            if (err.response.status === 401) {
-              dispatch('removeToken')
-              router.push({ name: 'LoginView' })
-            }
-          })
-        }
-      },
+    // fetchCurrentUser({ commit, getters, dispatch }) {
+    //   if (getters.isLoggedIn) {
+    //     axios({
+    //       url: drf.accounts.currentUserInfo(),
+    //       method: 'get',
+    //       headers: getters.authHeader,
+    //     })
+    //       .then(res => commit('SET_CURRENT_USER', res.data))
+    //       .catch(err => {
+    //         if (err.response.status === 401) {
+    //           dispatch('removeToken')
+    //           router.push({ name: 'LoginView' })
+    //         }
+    //       })
+    //     }
+    //   },
     },
   modules: {
   }

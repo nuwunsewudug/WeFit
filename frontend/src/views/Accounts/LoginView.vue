@@ -4,11 +4,11 @@
 		<form class="loginform">
 			<p>
 				<label for="emailInput">이메일</label>
-				<input type="text" id="emailInput" class="input_text" ref="emailInput" v-model.trim="email" placeholder="아이디를 입력하세요." />
+				<input type="text" id="emailInput" name="userEmail" class="input_text" ref="emailInput" v-model.trim="userEmail" placeholder="아이디를 입력하세요." />
 			</p>
 			<p>
 				<label for="passwordInput">패스워드</label>
-				<input type="password" id="passwordInput" class="input_text" ref="passwordInput" v-model.trim="password" placeholder="패스워드를 입력하세요." />
+				<input type="password" id="passwordInput" name="userPassword" class="input_text" ref="passwordInput" v-model.trim="userPassword" placeholder="패스워드를 입력하세요." />
 			</p>
 			<p class="buttons">
 				<button @click.prevent="login" class="button blue">로그인</button>
@@ -28,8 +28,8 @@ export default {
     },
     data() {
         return {
-            email: '',
-            password: ''
+            userEmail: '',
+            userPassword: ''
         }
     },
     computed: {
@@ -39,10 +39,9 @@ export default {
         login(event) {
       event.preventDefault()
       const userData = {
-        email: this.email,
-        password: this.password
+        "userEmail": this.userEmail,
+        "userPassword": this.userPassword
       }
-
       // dispatch
       this.$store.dispatch('login', userData)
     },
