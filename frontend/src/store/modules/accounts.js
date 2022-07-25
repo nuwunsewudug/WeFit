@@ -46,21 +46,34 @@ export default {
             })
     },
 
-    signup({ commit, dispatch }, userData) {
+    signup({ commit }, userData) {
       axios({
         url: drf.accounts.signup(),
         method: 'post',
         data: userData
       })
-        .then(res => {
-          const token = res.data.key
-          dispatch('saveToken', token)
-          dispatch('fetchCurrentUser')
+        .then(
           router.push({ name: 'HomeView' ,params:{username:userData.username}})
-        })
+        )
         .catch(err => {
           console.error(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
+        })
+    },
+
+    logout({ getters, dispatch }) {
+      axios({
+        url: drf.accounts.logout(),
+        method: 'post',
+        headers: getters.authHeader,
+      })
+        .then(() => {
+          dispatch('removeToken')
+          alert('성공적으로 logout!')
+          router.push({ name: 'LoginView' })
+        })
+        .error(err => {
+          console.error(err.response)
         })
     },
 
