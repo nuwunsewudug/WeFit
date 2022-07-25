@@ -25,6 +25,11 @@ export default {
       commit('SET_TOKEN', token)
       localStorage.setItem('token', token)
     },
+    removeToken({ commit }) {
+      console.log('good')
+      commit('SET_TOKEN', '')
+      localStorage.setItem('token', '')
+    },
     
     login({ commit, dispatch }, userData) {
       axios({

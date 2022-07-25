@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>homeview</h1>
-    <button @click="logout" to="#" class="text-decoration-none white--text">
+    <button v-if="isLoggedIn" @click="logout" to="#" class="text-decoration-none white--text">
         Logout
     </button>
   </div>
