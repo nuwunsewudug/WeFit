@@ -33,7 +33,6 @@ export default {
             data: userData
           })
             .then(res => {
-              console.log(res.data.token)
               const token = res.data.token
               
               dispatch('saveToken', token)
@@ -45,6 +44,24 @@ export default {
               console.error(err)
               commit('SET_AUTH_ERROR', err)
             })
+    },
+
+    signup({ commit, dispatch }, userData) {
+      axios({
+        url: drf.accounts.signup(),
+        method: 'post',
+        data: userData
+      })
+        .then(res => {
+          const token = res.data.key
+          dispatch('saveToken', token)
+          dispatch('fetchCurrentUser')
+          router.push({ name: 'HomeView' ,params:{username:userData.username}})
+        })
+        .catch(err => {
+          console.error(err.response.data)
+          commit('SET_AUTH_ERROR', err.response.data)
+        })
     },
 
     // fetchCurrentUser({ commit, getters, dispatch }) {
