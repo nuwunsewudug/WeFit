@@ -61,20 +61,20 @@ export default {
         })
     },
 
-    logout({ getters, dispatch }) {
-      axios({
-        url: drf.accounts.logout(),
-        method: 'post',
-        headers: getters.authHeader,
-      })
-        .then(() => {
+    logout({ dispatch }) {
+      // axios({
+      //   url: drf.accounts.logout(),
+      //   method: 'post',
+      //   headers: getters.authHeader,
+      // })
+        // .then(() => {
           dispatch('removeToken')
           alert('성공적으로 logout!')
           router.push({ name: 'LoginView' })
-        })
-        .error(err => {
-          console.error(err.response)
-        })
+        // })
+        // .error(err => {
+        //   console.error(err.response)
+        // })
     },
 
     // fetchCurrentUser({ commit, getters, dispatch }) {

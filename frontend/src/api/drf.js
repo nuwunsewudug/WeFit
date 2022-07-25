@@ -8,7 +8,7 @@ const HOST = 'http://localhost:8080/api/v1/'
 export default {
   accounts: {
     login: () => HOST  + 'authenticate',
-    // logout: () => HOST + ACCOUNTS + 'logout/',
+    // logout: () => HOST + 'logout/',
     signup: () => HOST  + 'signup',
     // Token 으로 현재 user 판단
     // currentUserInfo: () => HOST + ACCOUNTS + 'user/',
