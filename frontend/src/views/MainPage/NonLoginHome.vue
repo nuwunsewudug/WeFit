@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>homeview</h1>
-  </div>
+<div></div>
 </template>
 
 <script>
