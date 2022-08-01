@@ -13,6 +13,7 @@
 			<p class="buttons">
 				<button @click.prevent="login" class="button blue">로그인</button>
 				<button @click.prevent="$router.go(-1)" class="button">뒤로가기</button>
+				<button @click="handleLogin">Google ID로 로그인</button>
 			</p>
 		</form>
 		<!-- <p>{{ errorMessage }}</p> -->
@@ -36,7 +37,7 @@ export default {
         ...mapGetters([''])
     },
     methods: {
-        login(event) {
+      login(event) {
       event.preventDefault()
       const userData = {
         "userEmail": this.userEmail,
@@ -44,6 +45,14 @@ export default {
       }
       // dispatch
       this.$store.dispatch('login', userData)
+    },
+		async handleLogin() {
+      try {
+        const GoogleUser = await this.$gAuth.signIn();
+        console.log(GoogleUser);
+      } catch (e) {
+        console.error(e);
+      }
     },
     }
 }
