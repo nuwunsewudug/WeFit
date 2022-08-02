@@ -11,18 +11,32 @@
     <div class="carousel-item active">
       <img src="@/assets/MainPage/nonLoginPage.jpg" class="d-block w-100" alt="nonLoginPage.jpg">
       <div class="container">
-          <div class="carousel-caption text-end">
-            <h1>Example headline.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
-          </div>
+        <div class="carousel-caption text-end">
+          <h1>랜덤 매칭</h1>
+          <p>당신의 취향에 맞는 친구를 찾아 떠나보아요</p>
+          <p><a class="btn btn-lg btn-outline-light" href="#">매칭하러 가기</a></p>
         </div>
+      </div>
     </div>
     <div class="carousel-item">
       <img src="@/assets/MainPage/nonLoginPage.jpg" class="d-block w-100" alt="nonLoginPage.jpg">
+      <div class="container">
+        <div class="carousel-caption text-end">
+          <h1>방 만들기</h1>
+          <p>방을 직접 만들어서 친구들과 소통해요</p>
+          <p><a class="btn btn-lg btn-outline-light" href="#">방 만들기</a></p>
+        </div>
+      </div>
     </div>
     <div class="carousel-item">
       <img src="@/assets/MainPage/nonLoginPage.jpg" class="d-block w-100" alt="nonLoginPage.jpg">
+      <div class="container">
+        <div class="carousel-caption text-end">
+          <h1>커뮤니티</h1>
+          <p>커뮤니티에서 소통을 해봐요</p>
+          <p><a class="btn btn-lg btn-outline-light" href="#">커뮤니티 둘러보기</a></p>
+        </div>
+      </div>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
