@@ -1,25 +1,34 @@
 <template>
 	<div class="login">
-		<h1>Login page</h1>
 		<form class="loginform">
+		<h2>로그인 페이지</h2>
 			<p>
-				<label for="emailInput">이메일</label>
+				<div>
+				<label for="emailInput" id = "emailtext">your email</label>
+				</div>
 				<input type="text" id="emailInput" name="userEmail" class="input_text" ref="emailInput" v-model.trim="userEmail" placeholder="아이디를 입력하세요." />
 			</p>
 			<p>
-				<label for="passwordInput">패스워드</label>
+				<div>
+				<label for="passwordInput" id = "passwordtext">your password</label>
+				</div>
 				<input type="password" id="passwordInput" name="userPassword" class="input_text" ref="passwordInput" v-model.trim="userPassword" placeholder="패스워드를 입력하세요." />
 			</p>
 			<p class="buttons">
 				<button @click.prevent="login" class="button blue">로그인</button>
-				<button @click.prevent="$router.go(-1)" class="button">뒤로가기</button>
-				<button @click.prevent="$router.push('signup')">회원가입</button>
+
+				<div><p><span @click.prevent="$router.push('findid')" id = "findid">아이디찾기</span>  <span @click.prevent="$router.push('findpw')" id = "findpw" >비밀번호찾기</span>  <span @click.prevent="$router.push('signup')" id = "signup">회원가입</span></p></div> 
+				<div>
 				<button @click.prevent="google" >구글 로그인</button>
+				</div>
+				<div>
 				<button @click.prevent="kakaoLogin" > 카카오 로그인</button>
+				</div>
+				<div>
 				<button @click.prevent="naverLogin" > 네이버 로그인</button>
+				</div>
 			</p>
 		</form>
-		<!-- <p>{{ errorMessage }}</p> -->
 	</div>
 </template>
 
@@ -114,47 +123,41 @@ export default {
 </script>
 
 <style scoped>
-.login { 
-	width:800px; 
-	margin:20px auto; 
-	}
-.loginform { 
-	width:400px; 
-	margin:auto; 
-	}
-.loginform p > label { 
-	display:inline-block; 
-	width:100px; 
-	font-size:14px;
-	padding-right:10px; 
-	}
-.loginform p > .input_text { 
-	width:200px; 
-	font-size:14px; 
-	height:32px; 
-	}
-.buttons { 
-	position:relative; 
-	height:32px; 
-	margin-top:20px; 
-	}
-.buttons > .button { 
-	overflow:visible; 
-	cursor:pointer; 
-	min-width:125px; 
-	height:32px; 
-	margin:0 2px; 
-	padding:0 15px; 
-	line-height:32px; 
-	font-size:14px; 
-	border:1px 
-	solid #dfdfdf; 
-	background:#fff; 
-	border-radius:10px; 
-	}
-
-.buttons > .button.blue { 
-	color:#fff; 
-	border-color:#0099d2 !important; 
-	background:#0099d2 !important; }
+.login{
+    height: 100vh;
+    background-image: url("@/assets/loginpage.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+ }
+ .loginform{
+  text-align:center;
+  position : relative;
+  top :25%;
+ }
+ h2{
+	color : red;
+ }
+ .loginform{
+ }
+ #signup {
+  font-weight: bold;
+  color: white;
+  cursor:pointer;
+ }
+ #findid {
+  font-weight: bold;	
+  color: white;
+  cursor:pointer;
+ }
+ #findpw{
+  font-weight: bold;
+  color: white;
+  cursor:pointer;
+ }
+ #emailtext{
+  color: white;
+ }
+ #passwordtext{
+  color: white;
+ }
 </style>

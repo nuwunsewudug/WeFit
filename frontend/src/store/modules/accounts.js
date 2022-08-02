@@ -29,8 +29,7 @@ export default {
       console.log('good')
       commit('SET_TOKEN', '')
       localStorage.setItem('token', '')
-    },
-    
+    }, 
     login({ commit, dispatch }, userData) {
       axios({
             url: drf.accounts.login(),
@@ -38,8 +37,7 @@ export default {
             data: userData
           })
             .then(res => {
-              const token = res.data.token
-              
+              const token = res.data.token        
               dispatch('saveToken', token)
               dispatch('fetchCurrentUser')
               router.push({ name: 'HomeView' })
@@ -50,7 +48,24 @@ export default {
               commit('SET_AUTH_ERROR', err)
             })
     },
-
+    socialLogin({ } , socialLoginData){
+      axios({
+        url: drf.accounts.socialLogin(),
+        method: 'post',
+        data: socialLoginData
+      })
+        .then(res => {
+          const token = res.data.token        
+          dispatch('saveToken', token)
+          dispatch('fetchCurrentUser')
+          router.push({ name: 'HomeView' })
+        })
+        .catch(err => {
+          console.log(err)
+          console.error(err)
+          commit('SET_AUTH_ERROR', err)
+        })
+    },
     signup({ commit }, userData) {
       axios({
         url: drf.accounts.signup(),
@@ -65,7 +80,6 @@ export default {
           commit('SET_AUTH_ERROR', err.response.data)
         })
     },
-
     logout({ dispatch }) {
       // axios({
       //   url: drf.accounts.logout(),

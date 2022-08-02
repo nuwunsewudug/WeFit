@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD:frontend/src/views/HomeView.vue
   <div>
     <h1>homeview</h1>
     <button @click.prevent="$router.push('login')">로그인</button>
@@ -8,9 +7,6 @@
         Logout
     </button>
   </div>
-=======
-  <div></div>
->>>>>>> 79972530a09fea9aab143b61feb4bcc77493fba8:frontend/src/views/MainPage/LoginHome.vue
 </template>
 
 <script>

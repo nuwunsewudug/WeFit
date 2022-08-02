@@ -1,23 +1,22 @@
 <template>
-	<div class="signup">
-		<h1>Login page</h1>
-		<form class="signupform">
-			<p>
-				<label for="emailInput">이메일</label>
-				<input type="text" id="emailInput" name="userEmail" class="input_text" ref="emailInput" v-model.trim="userEmail" placeholder="아이디를 입력하세요." />
-			</p>
-			<p>
-				<label for="passwordInput">패스워드</label>
-				<input type="password" id="passwordInput" name="userPassword" class="input_text" ref="passwordInput" v-model.trim="userPassword" placeholder="패스워드를 입력하세요." />
-			</p>
-      <!-- <p>
-				<label for="passwordCheck">패스워드</label>
-				<input type="password" id="passwordCheck" name="userPasswordCheck" class="input_text" ref="passwordCheck" v-model.trim="userPasswordCheck" placeholder="패스워드를 확인하세요." />
-			</p> -->
-			<p class="buttons">
-				<button @click.prevent="signup" class="button blue">회원가입</button>
-				<button @click.prevent="$router.go(-1)" class="button">뒤로가기</button>
-			</p>
+	<div class="signup" >
+    <form class="signupform">
+		<h2>회원가입 페이지</h2>
+      <form class = "buttons">
+        <div>
+				<button @click.prevent="$router.push('signupbyemail')" id = "signupbtn">이메일로 가입하기</button>
+        </div>
+        <div>
+				<button class="button" id = "googlebtn"  @click.prevent = "googleSignup">구글 계정으로 가입</button>
+        </div>
+        <div>
+				<button class="button" id = "kakaobtn"  @click.prevent = "kakaoSignup">카카오로 시작하기</button>
+        </div>
+        <div>
+				<button class="button" id = "naverbtn" @click.prevent = "naverSignup">네이버로 시작하기</button>
+        </div>
+        <div>이미 회원이신가요? <span id = "login" @click.prevent = "$router.push('login')">로그인</span></div>
+      </form>
 		</form>
 		<!-- <p>{{ errorMessage }}</p> -->
 	</div>
@@ -41,7 +40,7 @@ export default {
         ...mapGetters([''])
     },
     methods: {
-        signup(event) {
+      emailSignup(event) {
       event.preventDefault()
       const userData = {
         "userEmail": this.userEmail,
@@ -55,6 +54,48 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+h2{
+  text-align:center;
+  color : red;
+}
+.signupform{
+  text-align:center;
+  position : relative;
+  top :25%;
+}
+.buttons{
+
+  }
+#naverbtn{
+    width: 23%;
+}
+.naver img{
+    height:0.9rem;
+    margin-right: 0.7em;
+    margin-left: 0.2em;
+}
+#kakaobtn{
+  width: 23%;
+}
+#googlebtn{
+  width: 23%;
+}
+#signupbtn{
+  width: 23%;
+}
+#login{
+  font-weight: bold;
+  color : red;
+  cursor:pointer;
+}
+
+
+.signup{
+    height: 100vh;
+    background-image: url("@/assets/loginpage.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+ }
 
 </style>
