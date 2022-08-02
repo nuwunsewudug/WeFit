@@ -67,7 +67,7 @@ export default {
 
 /* 배경 사진 */
 .background{
-  height: 100vh;
+  height: 100%;
   width:100%;
   overflow: hidden;
   margin:0;
@@ -119,7 +119,7 @@ h1{
 }
 @media (min-width: 1200px) {
 .homebox{
-  height: 20rem;
+  height: 25rem;
 }
 h1{
   color:white;
@@ -129,6 +129,7 @@ h1{
 
 /* 아랫배경(색동일) */
 .sec-background{
+
   background-color: rgba(6, 6, 6, 6);
   height : 100%;
 }
@@ -136,6 +137,7 @@ h1{
 /* 버튼 */
 button {
   margin-top:30px;
+  margin-bottom: 8rem;
 }
  .loginbtn{
   margin-left: 10rem;
