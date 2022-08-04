@@ -20,7 +20,7 @@
       <form class="d-flex" role="search">
         <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
         <button class="btn btn-outline-success mx-3" type="submit">Logout</button>
-        <button class="btn btn-outline-success" type="submit">Profile</button>
+        <router-link :to="{name:''}" class="btn btn-outline-success"><v-btn class="mx-1" dark>Profile</v-btn></router-link>
       </form>
     </div>
   </div>

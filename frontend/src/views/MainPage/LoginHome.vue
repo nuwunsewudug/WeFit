@@ -113,17 +113,15 @@
 
 
   <!-- FOOTER -->
-  <footer class="container">
-    <p class="float-end"><a href="#">Back to top</a></p>
-    <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-  </footer>
 </main>
+<MainFooter />
 </template>
 
 <script>
 import MainNavbar from '@/components/MainPage/MainNavbar.vue'
+import MainFooter from '@/components/MainPage/MainFooter.vue'
 export default {
-  components: { MainNavbar },
+  components: { MainNavbar, MainFooter },
 
 }
 </script>
