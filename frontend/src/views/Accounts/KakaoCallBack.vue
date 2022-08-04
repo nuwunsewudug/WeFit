@@ -17,9 +17,7 @@ export default {
         }
     },
     mounted() {
-    getKakaoToken();
-    getKakaoUserInfo();
-    refreshToken ();
+
     },
     computed: {
     },
