@@ -22,10 +22,10 @@
 			</p>
 			<!-- 밑의 체크박스 넣어야합니까? -->
             <div>                
-                <input type = "checkbox"> <label class = "text">i agree 어쩌구</label>
+                <input type = "checkbox"> <label>i agree 어쩌구</label>
             </div>
             <div>
-                <button @click.prevent = "emailSignup"> create your account</button>
+                <button @click.prevent = "emailSignup" id = "btn"> create your account</button>
             </div>
             </form>
  </div>
@@ -93,5 +93,33 @@ h2{
 }
 .text{
     color :white;
+}
+.input_text{
+  border-radius: 8px;
+  width : 24%;
+  height: 40px;
+  margin-left: 10px;
+}
+#btn{
+    text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: auto;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 23%;
+    height: 46px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    background: #ef3e43;
+    border: 0;
+    margin-top: 30px;
+    font-size: 17px;
 }
 </style>

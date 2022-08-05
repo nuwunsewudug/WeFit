@@ -80,6 +80,20 @@ export default {
           commit('SET_AUTH_ERROR', err.response.data)
         })
     },
+    signupdetail({ commit }, userDetailData) {
+      axios({
+        url: drf.accounts.signup()+user_id,
+        method: 'post',
+        data: userDetailData,
+      })
+        .then(
+          router.push({ name: 'HomeView' ,params:{username:userData.username}})
+        )
+        .catch(err => {
+          console.error(err.response.data)
+          commit('SET_AUTH_ERROR', err.response.data)
+        })
+    },
     logout({ dispatch }) {
       // axios({
       //   url: drf.accounts.logout(),

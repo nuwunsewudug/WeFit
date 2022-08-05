@@ -4,18 +4,18 @@
 		<h2>아이디찾기</h2>
 			<p>
 				<div>
-				<label for="emailInput" id = "emailtext">your email</label>
+				<label for="emailInput" id = "emailtext">입력값1</label>
 				</div>
-				<input type="text" id="emailInput" name="userEmail" class="input_text" ref="emailInput" v-model.trim="userEmail" placeholder="아이디를 입력하세요." />
+				<input type="text" id="emailInput" name="userEmail" class="input_text" ref="emailInput" v-model.trim="userEmail" placeholder="입력값1을 입력하세요." />
 			</p>
 			<p>
 				<div>
-				<label for="passwordInput" id = "passwordtext">your password</label>
+				<label for="passwordInput" id = "passwordtext">입력값2</label>
 				</div>
-				<input type="password" id="passwordInput" name="userPassword" class="input_text" ref="passwordInput" v-model.trim="userPassword" placeholder="패스워드를 입력하세요." />
+				<input type="password" id="passwordInput" name="userPassword" class="input_text" ref="passwordInput" v-model.trim="userPassword" placeholder="입력값2를 입력하세요." />
 			</p>
             <div>
-                <button> 찾기</button>
+                <button id = "findidbtn"> 찾기</button>
             </div>
             </form>
 </div>
@@ -45,5 +45,33 @@
  }
  #passwordtext{
   color: white;
+ }
+ input{
+  border-radius: 8px;
+  width : 24%;
+  height: 40px;
+  margin-left: 10px;
+ }
+ #findidbtn{
+text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: auto;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 23%;
+    height: 46px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    background: #ef3e43;
+    border: 0;
+    margin-top: 30px;
+    font-size: 17px;
  }
 </style>

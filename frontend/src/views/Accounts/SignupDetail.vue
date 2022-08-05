@@ -3,21 +3,21 @@
     <div id = "inputdetail" >
     <h2>We Fit</h2>
     <hr>
-    <p> 이름  <span>이름</span>  </p>
+    <p> 이름  <span>입력</span>  </p>
     <hr>
-    <p> 이메일  <span>이메일</span>  </p>
+    <p> 이메일  <span>입력</span>  </p>
     <hr>    
-    <p> 성별   <input type="radio" name="chk_info" value="남자" class = "radiobtn">남자  <input type="radio" name="chk_info" value="여자" class = "radiobtn">여자 </p>
+    <p> 성별  </p>
     <hr>   
     <p> 닉네임   <span>입력</span> </p>
     <hr>   
-    <p> 지역  <span> 클릭하면지역선택페이지뜸</span> </p>
+    <p> 지역  <span> 입력</span> </p>
     <hr>   
-    <p> MBTI    <span @click = "mbtiModalOpen = true"> 클릭하면mbti모달뜸 </span></p>
+    <p> MBTI    <span @click = "mbtiModalOpen = true"> 입력 </span></p>
     <hr>
-    <p> 관심사   <span @click = "interestModalOpen = true">클릭하면관심사모달창뜸 </span> </p>
+    <p> 관심사   <span @click = "interestModalOpen = true">입력 </span> </p>
     <hr>
-    <button id = "submitbtn" @click.prevent = "">제출하기</button>
+    <button id = "submitbtn" @click.prevent = "">가입하기</button>
     </div>
     <div>
         <img src = "@/assets/img.png" id = "img">
@@ -65,6 +65,7 @@ export default {
     },
     data() {
       return {
+        userEmail : '',
         userMbti   : '',
         userGender : '', 
         userName   : '',
@@ -82,6 +83,7 @@ export default {
     methods: {
      submit(){
         const userDetailData = {
+        "userEmail" : this.userEmail,
         "userMbti": this.userMbti,
         "userGender": this.userGender,
         "userName": this.userName,

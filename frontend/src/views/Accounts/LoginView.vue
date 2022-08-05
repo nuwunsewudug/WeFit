@@ -15,17 +15,17 @@
 				<input type="password" id="passwordInput" name="userPassword" class="input_text" ref="passwordInput" v-model.trim="userPassword" placeholder="패스워드를 입력하세요." />
 			</p>
 			<p class="buttons">
-				<button @click.prevent="login" class="button blue">로그인</button>
+				<button @click.prevent="login" class="button blue" id = "loginbtn">로그인</button>
 
 				<div><p><span @click.prevent="$router.push('findid')" id = "findid">아이디찾기</span>  <span @click.prevent="$router.push('findpw')" id = "findpw" >비밀번호찾기</span>  <span @click.prevent="$router.push('signup')" id = "signup">회원가입</span></p></div> 
 				<div>
-				<button @click.prevent="google" >구글 로그인</button>
+				<button @click.prevent="google" id = "googlebtn" >구글 로그인</button>
 				</div>
 				<div>
-				<button @click.prevent="kakaoLogin" > 카카오 로그인</button>
+				<button @click.prevent="kakaoLogin" id = "kakaobtn"> 카카오 로그인</button>
 				</div>
 				<div>
-				<button @click.prevent="naverLogin" > 네이버 로그인</button>
+				<button @click.prevent="naverLogin" id = "naverbtn"> 네이버 로그인</button>
 				</div>
 			</p>
 		</form>
@@ -159,5 +159,99 @@ export default {
  }
  #passwordtext{
   color: white;
+ }
+ input{
+  border-radius: 8px;
+  width : 24%;
+  height: 40px;
+  margin-left: 10px;
+ }
+ #loginbtn{
+    text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: auto;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 23%;
+    height: 46px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    background: #ef3e43;
+    border: 0;
+    margin-top: 30px;
+    font-size: 17px;
+ }
+ #naverbtn{
+    text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: auto;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 23%;
+    height: 46px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    background: #2db400;
+    border: 0;
+    margin-top: 10px;
+    font-size: 17px;
+ }
+ #kakaobtn{
+ text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: auto;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 23%;
+    height: 46px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+    font-weight: bold;
+    background: #fde102;
+    border: 0;
+    margin-top: 10px;
+    font-size: 17px;
+ }
+ #googlebtn{
+  text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: auto;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 23%;
+    height: 46px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+    font-weight: bold;
+    background : white;
+    border: 0;
+    margin-top: 10px;
+    font-size: 17px;
  }
 </style>

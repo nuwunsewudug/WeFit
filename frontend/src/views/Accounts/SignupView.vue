@@ -60,14 +60,14 @@ h2{
     text-size-adjust: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     appearance: none;
-    margin: 0;
+    margin: auto;
     padding: 0;
     outline: none;
     user-select: none;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
     display: block;
-    width: 25%;
-    height: 50px;
+    width: 23%;
+    height: 46px;
     padding-bottom: 1px;
     border-radius: 10px;
     cursor: pointer;
@@ -75,7 +75,7 @@ h2{
     font-weight: bold;
     background: #2db400;
     border: 0;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 17px;
 }
 
@@ -83,14 +83,14 @@ h2{
     text-size-adjust: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     appearance: none;
-    margin: 0;
-    padding: 0;
+    margin: auto;
+    
     outline: none;
     user-select: none;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
     display: block;
-    width: 25%;
-    height: 50px;
+    width: 23%;
+    height: 46px;
     padding-bottom: 1px;
     border-radius: 10px;
     cursor: pointer;
@@ -98,21 +98,21 @@ h2{
     font-weight: bold;
     background: #fde102;
     border: 0;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 17px;
 }
 #googlebtn{
     text-size-adjust: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     appearance: none;
-    margin: 0;
+    margin: auto;
     padding: 0;
     outline: none;
     user-select: none;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
     display: block;
-    width: 25%;
-    height: 50px;
+    width: 23%;
+    height: 46px;
     padding-bottom: 1px;
     border-radius: 10px;
     cursor: pointer;
@@ -120,21 +120,21 @@ h2{
     font-weight: bold;
     background : white;
     border: 0;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 17px;
 }
 #signupbtn{
     text-size-adjust: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     appearance: none;
-    margin: 0;
+    margin: auto;
     padding: 0;
     outline: none;
     user-select: none;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
     display: block;
-    width: 25vw;
-    height: 50px;
+    width: 23%;
+    height: 46px;
     padding-bottom: 1px;
     border-radius: 10px;
     cursor: pointer;
@@ -142,7 +142,7 @@ h2{
     font-weight: bold;
     background: #ef3e43;
     border: 0;
-    margin-top: 30px;
+    margin-top: 50px;
     font-size: 17px;
 }
 #login{

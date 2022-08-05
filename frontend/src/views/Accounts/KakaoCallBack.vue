@@ -12,12 +12,13 @@ export default {
     },
     data() {
         return {
-            userEmail: '',
-            userPassword: ''
+            code : '',
         }
     },
     mounted() {
-
+        let temp = new URL(window.location.href).searchParams.get('code')
+        console.log(temp);
+        getKakaoToken(temp);  
     },
     computed: {
     },

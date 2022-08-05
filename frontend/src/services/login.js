@@ -1,3 +1,4 @@
+import Axios from 'axios';
 
 const kakaoHeader = {
     'Authorization': 'b7d5f791d9c8c1e82b90b2e2987c867b',
@@ -9,16 +10,18 @@ const getKakaoToken = async (code) => {
         const data = {
             grant_type: 'authorization_code',
             client_id: '3a845c92bb113831d32d35810b1969dd',
-            redirect_uri: 'http://localhost:8080/login',
+            redirect_uri: 'http://localhost:8080/kakaocallback',
             code: code,
         };
         const queryString = Object.keys(data)
             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
             .join('&');
-        const result = await axios.post('https://kauth.kakao.com/oauth/token', queryString, { headers: kakaoHeader });
+        const result = await Axios.post('https://kauth.kakao.com/oauth/token', queryString, { headers: kakaoHeader });
+        console.log('1234')
         console.log('카카오 토큰', result);
         return result;
     } catch (e) {
+        console.log(e);
         return e;
     }
 };
