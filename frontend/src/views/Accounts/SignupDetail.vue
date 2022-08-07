@@ -1,68 +1,71 @@
 <template>
-    <div class = "signupdetail">
+    <div class = "signupdetail" >
     <div id = "inputdetail" >
     <h2>We Fit</h2>
+    <table>
     <hr>
-    <p> 이름  <span>입력</span>  </p>
+    <tr>
+    <td>이름</td> 
+    <td><span @click = "nameopen =true" v-if ="nameopen ===false">입력</span></td>
+    <td><input v-if ="nameopen ===true"></td>
+    </tr>
     <hr>
-    <p> 이메일  <span>입력</span>  </p>
-    <hr>    
-    <p> 성별  </p>
+    <tr> <td> 이메일 </td> 
+    <td><span>입력</span> </td>  </tr>
+    <hr> 
+    <tr> 
+    <td> 성별 </td>  
+    <td> <input type = "radio" name="gender" value = "man">남자 <input type = "radio" name="gender" value ="woman">여자 </td>
+    </tr>
     <hr>   
-    <p> 닉네임   <span>입력</span> </p>
-    <hr>   
-    <p> 지역  <span> 입력</span> </p>
-    <hr>   
-    <p> MBTI    <span @click = "mbtiModalOpen = true"> 입력 </span></p>
+    <tr>
+    <td> 닉네임</td>  
+    <td><span>입력</span></td>
+    </tr>
     <hr>
-    <p> 관심사   <span @click = "interestModalOpen = true">입력 </span> </p>
+    <tr>   
+    <td>지역</td> 
+    <td> <span> 입력</span> </td>
+    </tr>
+    <hr>
+    <tr>   
+    <td>MBTI</td>  
+    <td><span @click = "mbtiModalOpen = true"> 입력 </span> </td> 
+     </tr>
+    <hr>
+    <tr>
+    <td> 관심사 </td>  
+    <td><span @click = "interestModalOpen = true">입력 </span> </td> 
+    </tr>
     <hr>
     <button id = "submitbtn" @click.prevent = "">가입하기</button>
-    </div>
+    </table>
+    </div>  
     <div>
         <img src = "@/assets/img.png" id = "img">
     </div>
-    
-   <!-- 모달창 -->
-   <div class="interestmodal" v-if="interestModalOpen === true">
-   <div class="white-bg">
-    <p>좋아하는 것을 선택해 주세요</p>
-    <div class = "box">
-    <input type = "checkbox" class = "item"> 영화
-    <input type = "checkbox" class = "item"> 애니
-    <input type = "checkbox" class = "item"> 악기연주
-    <input type = "checkbox" class = "item"> 동물
     </div>
-    <div class = "box">
-    <input type = "checkbox" class = "item"> 운동
-    <input type = "checkbox" class = "item"> 사주
-    <input type = "checkbox" class = "item"> 맛집
-    <input type = "checkbox" class = "item"> 술
+
+    <div>
+     <SelectMbtiModal v-if ="mbtiModalOpen ===true">
+     </SelectMbtiModal>
     </div>
-    <div class = "box">
-    <input type = "checkbox" class = "item"> 엔터
-    <input type = "checkbox" class = "item"> 타로
-    <input type = "checkbox" class = "item"> 요리
-    <input type = "checkbox" class = "item"> 재태크
-    </div>
-    <div class = "box">
-    <input type = "checkbox" class = "item"> 게임
-    <input type = "checkbox" class = "item"> 음악감상  
-    <input type = "checkbox" class = "item"> 독서
-    <input type = "checkbox" class = "item"> 자격증
-    </div>
-   </div>
-</div>
+    <div>
+     <SelectInterestModal v-if="interestModalOpen === true" >
+     </SelectInterestModal>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import SelectMbtiModal from '@/components/SelectMbtiModal.vue';
+import SelectInterestModal from '@/components/SelectInterestModal.vue';
 export default {
     name: 'SignUpdetail',
     components: {
-
-    },
+    SelectMbtiModal,
+    SelectInterestModal
+},
     data() {
       return {
         userEmail : '',
@@ -74,7 +77,8 @@ export default {
         userNickName : '',
         userInterestList : '',
         mbtiModalOpen : false,
-        interestModalOpen: false
+        interestModalOpen: false,
+        nameopen:false,
     }
     },
     computed: {
@@ -86,18 +90,12 @@ export default {
         "userEmail" : this.userEmail,
         "userMbti": this.userMbti,
         "userGender": this.userGender,
+        "userNickName" : this.userNickName,
         "userName": this.userName,
         "userField" : this.userField,
-        "userPhone": this.userPhone,
-        "userNickName" : this.userNickName,
+        "userPhone": this.userPhone,   
       }
        this.$store.dispatch('signupdetail', userDetailData);
-     },
-     openmbtimodal(){
-
-     },
-     openinterestmodal(){
-
      },
     }
 }
@@ -110,17 +108,20 @@ export default {
     display: flex;
     background-color: rgba(22, 22, 22, 22);
 }
-p{
+table{
+   padding : 0px;
+   border-spacing: 0px;
+   border-collapse: separate;
+}
+td{
     font :bold;
     color : #FFFA85;
 }
 #inputdetail{
-    
     padding-top : 6%;
     padding-left : 20%;
     font-weight: bold;
     color : white;
-   
 }
 #img{
   padding-top : 100px;
@@ -149,27 +150,7 @@ p{
     font-size: 17px;
 }
 span{
-    padding-left : 40%;
     cursor:pointer;
 }
-.interestmodal {
-  color : white;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.white-bg {
-  background-color: #272724;
-  height: 50vh;
-  width : 50vw;
-}
-.box{
-    display : flex;
-}
-.item{
-display : flex;
-width : 20%;
-height : 20%;
-}
+
 </style>

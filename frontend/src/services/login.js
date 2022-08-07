@@ -1,3 +1,4 @@
+
 import Axios from 'axios';
 
 const kakaoHeader = {
@@ -17,7 +18,6 @@ const getKakaoToken = async (code) => {
             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
             .join('&');
         const result = await Axios.post('https://kauth.kakao.com/oauth/token', queryString, { headers: kakaoHeader });
-        console.log('1234')
         console.log('카카오 토큰', result);
         return result;
     } catch (e) {

@@ -1,6 +1,6 @@
 <template>
 <div>
-    test.
+    test
 </div>
 </template>
 
@@ -16,9 +16,9 @@ export default {
         }
     },
     mounted() {
-        let temp = new URL(window.location.href).searchParams.get('code')
-        console.log(temp);
-        getKakaoToken(temp);  
+       // let temp = new URL(window.location.href).searchParams.get('code')
+        //console.log(temp);
+        //getKakaoToken(temp);  
     },
     computed: {
     },

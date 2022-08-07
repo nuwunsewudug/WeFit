@@ -18,7 +18,6 @@
         <div>이미 회원이신가요? <span id = "login" @click.prevent = "$router.push('login')">로그인</span></div>
       </form>
 		</form>
-		<!-- <p>{{ errorMessage }}</p> -->
 	</div>
 </template>
 
