@@ -48,7 +48,7 @@ export default {
               commit('SET_AUTH_ERROR', err)
             })
     },
-    socialLogin({ } , socialLoginData){
+    socialLogin({ commit,dispatch } , socialLoginData){
       axios({
         url: drf.accounts.socialLogin(),
         method: 'post',
@@ -72,16 +72,28 @@ export default {
         method: 'post',
         data: userData
       })
-        .then(  res =>
-          console.log(res),
-          router.push({ name: 'signupdetail' ,params:{user_id:user_id}})
+        .then(
+          router.push({ name: 'signupdetail' ,params:{username:userData.username}})
         )
         .catch(err => {
           console.error(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
         })
     },
-
+    signupDetail({ commit }, userDetailData){
+      axios({
+        url: drf.accounts.signupDetail(),
+        method: 'post',
+        data: userDetailData
+      })
+      .then(
+        router.push({ name: 'HomeView' ,params:{username:userDetailData.username}})
+      )
+      .catch(err =>{
+        console.error(err.response.data)
+        commit('SET_AUTH_ERROR', err.response.data)
+      })
+    },
     logout({ dispatch }) {
       // axios({
       //   url: drf.accounts.logout(),
