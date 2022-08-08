@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NonLoginView from '@/views/MainPage/NonLoginHome.vue'
+import LoginHome from '@/views/MainPage/LoginHome.vue'
 import LoginView from '@/views/Accounts/LoginView.vue'
 import SignupView from '@/views/Accounts/SignupView.vue'
 
@@ -9,12 +10,11 @@ const routes = [
     name: 'NonLoginView',
     component: NonLoginView
   },
-  // {
-  //   path: '/home',
-  //   name: 'HomeView',
-  //   component: HomeView,
-  //   beforeEnter: requireAuth()
-  // },
+  {
+    path: '/Home',
+    name: 'LoginHome',
+    component: LoginHome
+  },
   {
     path: '/login',
     name: 'LoginView',
