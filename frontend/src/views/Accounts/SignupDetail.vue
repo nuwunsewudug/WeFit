@@ -47,7 +47,7 @@
     </div>
 
     <div>
-     <SelectMbtiModal v-if ="mbtiModalOpen ===true">
+     <SelectMbtiModal v-if ="mbtiModalOpen ===true" v-model ="userMbti">
      </SelectMbtiModal>
     </div>
     <div>

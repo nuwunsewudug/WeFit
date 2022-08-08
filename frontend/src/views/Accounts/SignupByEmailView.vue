@@ -38,11 +38,13 @@ export default {
     components: {
 
     },
+     props : {
+        userEmail: this.userEmail,
+        userPassword: this.userPassword,
+    },
     data() {
         return {
-            userEmail: '',
-            userPassword: '',
-            userPasswordCheck:'',
+            userPasswordCheck:''
         }
     },
     computed: {
@@ -58,14 +60,9 @@ export default {
       }
 	  if(this.userPassword !='' &&this.userPassword == this.userPasswordCheck )
 	  {
-		/* 
-		회원가입 유저 플로우가 회원가입 -> 상세정보 입력 후 한번에 회원가입부터 디테일까지 처리?  
-		아니면 회원가입 먼저 DB에서 처리하고 그다음 상세내용을 입력하게 되는가?  
-		회원가입 먼저 처리할 경우 중간에 유저가 나가버릴 경우 어떻게 되는지? 
-		내 생각 -> Api에 요청을 디테일까지 한번에 보내기.
-		*/
+    
 		this.$router.push('signupdetail');
-        this.$store.dispatch('signup', userData);
+    this.$store.dispatch('signup', userData);
 	  }
 	  else{
 		alert('비밀번호를 확인하세요');
