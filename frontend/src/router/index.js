@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/MainPage/LoginHome.vue'
+import NonLoginView from '@/views/MainPage/NonLoginHome.vue'
+import LoginHome from '@/views/MainPage/LoginHome.vue'
 import LoginView from '@/views/Accounts/LoginView.vue'
 import SignupView from '@/views/Accounts/SignupView.vue'
 import KakaoCallBack from '@/views/Accounts/KakaoCallBack.vue'
@@ -7,18 +8,18 @@ import findId from '@/views/Accounts/FindId.vue'
 import findPw from '@/views/Accounts/FindPw.vue'
 import SignUpByEmail from '@/views/Accounts/SignupByEmailView.vue'
 import SigupDetail from '@/views/Accounts/SignupDetail.vue'
+
 const routes = [
   {
     path: '/',
-    name: '',
-    component: HomeView
+    name: 'NonLoginView',
+    component: NonLoginView
   },
-  // {
-  //   path: '/home',
-  //   name: 'HomeView',
-  //   component: HomeView,
-  //   beforeEnter: requireAuth()
-  // },
+  {
+    path: '/Home',
+    name: 'LoginHome',
+    component: LoginHome
+  },
   {
     path: '/login',
     name: 'LoginView',

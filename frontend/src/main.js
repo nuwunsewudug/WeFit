@@ -23,8 +23,8 @@ const firebaseConfig = {
 window.Kakao.init('1337aaeee72289e0725aed7e44932576');
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const firebaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebaseApp);
 
   
 createApp(App).use(store).use(router).mount('#app')

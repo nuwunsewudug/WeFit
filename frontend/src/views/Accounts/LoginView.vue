@@ -88,11 +88,11 @@ export default {
     // ...
      });
 	},
-	kakaoLogin(){
-	 Kakao.isInitialized();
-	 window.Kakao.Auth.authorize({
-     redirectUri: 'http://localhost:8080/kakaocallback'
-     });
+	// kakaoLogin(){
+	//  Kakao.isInitialized();
+	//  window.Kakao.Auth.authorize({
+  //    redirectUri: 'http://localhost:8080/kakaocallback'
+  //    });
 
 	 
 	 
@@ -117,10 +117,9 @@ export default {
     })
 	*/
     },
-	naverLogin(){
+	// naverLogin(){
 		
-	}
-    }
+	// }
 }
 </script>
 
@@ -139,8 +138,8 @@ export default {
  h2{
 	color : red;
  }
- .loginform{
- }
+ /* .loginform{
+ } */
  #signup {
   font-weight: bold;
   color: white;
