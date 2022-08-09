@@ -60,7 +60,7 @@
     </td>
     </tr>
     </table>
-    <button id = "submitbtn" @click.prevent = "SubmitEvent">결정하기</button>
+    <button id = "submitbtn" @click.prevent = "selectmbti">결정하기</button>
    </div>
    </div>
 </template>
@@ -80,13 +80,13 @@ export default{
      clickFunc(event) {
           for(let i=0; i<this.checkedValues.length;i++){
             if(this.checkedValues[i] !== event.target.value){
-            console.log(this.checkedValues[i])
             this.checkedValues.splice(i,1);
             }
           }
         },
-    SubmitEvent(){
-
+    selectmbti(){
+      let mbti = this.checkedValues[0];
+      this.$emit("selectmbti",mbti);
     }    
   }
 };

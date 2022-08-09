@@ -1,6 +1,6 @@
 <template>
     <div class = "signupdetail" >
-    <div id = "inputdetail" >
+    <div id = "inputdetail">
     <h2>We Fit</h2>
     <table>
     <hr>
@@ -38,7 +38,7 @@
     <td><span @click = "interestModalOpen = true">입력 </span> </td> 
     </tr>
     <hr>
-    <button id = "submitbtn" @click.prevent = "">가입하기</button>
+    <button id = "submitbtn" @click.prevent = "submit">가입하기</button>
     </table>
     </div>  
     <div>
@@ -47,11 +47,11 @@
     </div>
 
     <div>
-     <SelectMbtiModal v-if ="mbtiModalOpen ===true" v-model ="userMbti">
+     <SelectMbtiModal v-if="mbtiModalOpen ==true" v-model ="userMbti" v-click-outside="mbtimodalclose" v-on:selectmbti="selectmbti" >
      </SelectMbtiModal>
     </div>
     <div>
-     <SelectInterestModal v-if="interestModalOpen === true" >
+     <SelectInterestModal v-if="interestModalOpen == true"  v-click-outside="interestmodalclose">
      </SelectInterestModal>
     </div>
 </template>
@@ -60,7 +60,11 @@
 import { mapGetters } from 'vuex'
 import SelectMbtiModal from '@/components/SelectMbtiModal.vue';
 import SelectInterestModal from '@/components/SelectInterestModal.vue';
+import vClickOutside from 'v-click-outside';
 export default {
+    directives: {
+    clickOutside: vClickOutside.directive
+    },
     name: 'SignUpdetail',
     components: {
     SelectMbtiModal,
@@ -75,7 +79,7 @@ export default {
         userField  : '',
         userPhone  : '',
         userNickName : '',
-        userInterestList : '',
+        userInterestList : [],
         mbtiModalOpen : false,
         interestModalOpen: false,
         nameopen:false,
@@ -96,7 +100,27 @@ export default {
         "userPhone": this.userPhone,   
       }
        this.$store.dispatch('signupdetail', userDetailData);
+       //아직 안돌려봄
      },
+    mbtimodalclose(event){
+        this.mbtiModalOpen = false;
+        //왜안될까...
+    },
+    interestmodalclose(event){
+        this.interestModalOpen = false;
+        //왜안될까...
+    },
+    selectmbti(value){
+        this.mbtiModalOpen = false;
+        this.userMbti =value;
+        console.log(this.userMbti);
+        //일단 이건 잘돌아감 mbti 모달에서 데이터 잘 받음
+    }
+    },
+    SelectInterest(value){
+        this.interestModalOpen = false;
+        this.userInterestList = value; 
+        //이부분은 mbti 모달에서 쓴 그대로 쓰면됨 아직 페이지네이션 구현 덜함     
     }
 }
 </script>

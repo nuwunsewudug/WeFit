@@ -39,11 +39,12 @@ export default {
 
     },
      props : {
-        userEmail: this.userEmail,
-        userPassword: this.userPassword,
+
     },
     data() {
         return {
+            userEmail: '',
+            userPassword: '',
             userPasswordCheck:''
         }
     },
@@ -52,22 +53,27 @@ export default {
     },
     methods: {
       emailSignup(event) {
-      event.preventDefault()
+      event.preventDefault();
+      console.log(this.userEmail);
+      if(this.userEmail != '')
+      {
       const userData = {
         "userEmail": this.userEmail,
         "userPassword": this.userPassword,
         "userPasswordCheck": this.userPasswordCheck
       }
-	  if(this.userPassword !='' &&this.userPassword == this.userPasswordCheck )
-	  {
-    
-		this.$router.push('signupdetail');
-    this.$store.dispatch('signup', userData);
-	  }
-	  else{
-		alert('비밀번호를 확인하세요');
-	  }
-      // dispatch
+	    if(this.userPassword !='' &&this.userPassword == this.userPasswordCheck )
+	    {
+	   	this.$router.push('signupdetail');
+      this.$store.dispatch('signup', userData);
+	    }
+	    else{
+	  	alert('비밀번호를 확인하세요');
+	     }
+      }
+      else{
+      alert('아이디를 확인하세요');
+      }
     },
     }
 }

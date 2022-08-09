@@ -6,6 +6,16 @@ export default {
   state: {
     token: localStorage.getItem('token') || '',
     currentUser: {},
+    user :{
+      userEmail : '',
+      userMbti   : '',
+      userGender : '', 
+      userName   : '',
+      userField  : '',
+      userPhone  : '',
+      userNickName : '',
+      userInterestList : [],
+    }
   },
   getters: {
     isLoggedIn: state => !!state.token,
@@ -48,7 +58,7 @@ export default {
               commit('SET_AUTH_ERROR', err)
             })
     },
-    socialLogin({ commit,dispatch } , socialLoginData){
+    socialLogin({ } , socialLoginData){
       axios({
         url: drf.accounts.socialLogin(),
         method: 'post',
@@ -72,27 +82,28 @@ export default {
         method: 'post',
         data: userData
       })
-        .then(
-          router.push({ name: 'signupdetail' ,params:{username:userData.username}})
+        .then(  res =>
+          console.log(res),
+          router.push({ name: 'signupdetail' ,params:{user_id:user_id}})
         )
         .catch(err => {
           console.error(err.response.data)
           commit('SET_AUTH_ERROR', err.response.data)
         })
     },
-    signupDetail({ commit }, userDetailData){
+    signupdetail({ commit }, userDetailData) {
       axios({
-        url: drf.accounts.signupDetail(),
+        url: drf.accounts.signup()+user_id,
         method: 'post',
-        data: userDetailData
+        data: userDetailData,
       })
-      .then(
-        router.push({ name: 'HomeView' ,params:{username:userDetailData.username}})
-      )
-      .catch(err =>{
-        console.error(err.response.data)
-        commit('SET_AUTH_ERROR', err.response.data)
-      })
+        .then(
+          router.push({ name: 'HomeView' ,params:{username:userData.username}})
+        )
+        .catch(err => {
+          console.error(err.response.data)
+          commit('SET_AUTH_ERROR', err.response.data)
+        })
     },
     logout({ dispatch }) {
       // axios({

@@ -56,7 +56,8 @@ export default {
         "userPassword": this.userPassword
       }
       // dispatch
-      this.$store.dispatch('login', userData)
+      this.$store.dispatch('login', userData);
+      //
     },
 	google(){
 		const provider = new GoogleAuthProvider();
@@ -65,12 +66,13 @@ export default {
        'login_hint': 'user@example.com'
         });
 		const auth = getAuth();
-        signInWithPopup(auth, provider).then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
+    signInWithPopup(auth, provider).then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    
+    // The signed-in user info.
+    const user = result.user;
 		console.log(user);
 		this.$store.dispatch('socialLogin', socialLoginData)
 		

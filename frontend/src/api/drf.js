@@ -15,7 +15,11 @@ export default {
     // // username으로 프로필 제공
     // profile: username => HOST + ACCOUNTS + 'profile/' + username,
 
-    userDetailData: () => HOST  + 'signupdetail',
+    //signupdetail: () => HOST  + 'user-info/{user_id}',
+
+    //findid: () => HOST + 'findid',
+    
+    //findpw : () =>  HOST + 'findpw',
   },
 //   communities: {
 //     // /community/

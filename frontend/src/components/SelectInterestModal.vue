@@ -60,14 +60,25 @@
     </td>
     </tr>
     </table>
+     <button id = "submitbtn" @click.prevent = "SelectInterest">결정하기</button>
    </div>
    </div>
 </template>
 
 <script>
 export default{
-
-
+    data() {
+      return {
+       checkedValues:[],
+    }
+    },
+    methods: {
+      SelectInterest(){
+      let InterestList = this.checkedValues;
+      this.$emit("SelectInterest",InterestList);
+      }
+    }
+    //여기는 아직 틀만 잡고 상세내용은 미구현(페이지네이션 구현해야됨)
 };
 </script>
 
@@ -97,5 +108,27 @@ p{
     color:red;
     position : relative;
     text-align: center;
+}
+#submitbtn{
+    text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    appearance: none;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, "Droid Sans", "Helvetica Neue", "Apple SD Gothic Neo", "sans-serif", sans-serif;
+    display: block;
+    width: 25vw;
+    height: 50px;
+    padding-bottom: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    background: #ef3e43;
+    border: 0;
+    margin-top: 30px;
+    font-size: 17px;
 }
 </style>
