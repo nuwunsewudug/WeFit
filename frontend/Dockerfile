@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build-stage
+FROM node:lts-alpine as builder
 
 # install simple http server for serving static content
 RUN npm install -g http-server
@@ -18,7 +18,7 @@ COPY . .
 # build app for production with minification
 RUN npm run build
 
-FROM nginx:stable-alpine as production-stage
+FROM nginx:stable-alpine
 RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/nginx/default.conf /etc/nginx/conf.d/default.conf
 
