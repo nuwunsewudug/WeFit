@@ -18,9 +18,9 @@ COPY . .
 # build app for production with minification
 RUN npm run build
 
-FROM nginx:stable-alpine
+FROM nginx
 RUN rm -rf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/docker/nginx/conf/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
 RUN rm-rf /usr/share/nginx/html/*
 COPY --from=builder /app/dist /usr/share/nginx/html
