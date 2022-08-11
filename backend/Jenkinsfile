@@ -110,7 +110,7 @@ pipeline {
 
         stage('[FE] Docker start'){
             steps{
-                sh 'echo "[FE] Start'
+                sh 'echo "[FE] Start"'
                 dir('frontend'){
                     sh 'docker-compose up -d'
                 }
