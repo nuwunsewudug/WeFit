@@ -92,5 +92,35 @@ pipeline {
               }
         }
 
+        stage('[FE] Docker stop'){
+            steps{
+                sh 'echo "[FE] Prepare'
+                dir('frontend'){
+                    sh 'docker-compose stop'
+                    sh 'docker rm vue'
+                    sh 'docker rmi frontend_vue'
+                }
+            }
+            post {
+                 failure {
+                     sh 'echo "Prepare FE Fail"'
+                }
+            }
+        }
+
+        stage('[FE] Docker start'){
+            steps{
+                sh 'echo "[FE] Start'
+                dir('frontend'){
+                    sh 'docker-compose up -d'
+                }
+            }
+            post {
+                 failure {
+                     sh 'echo "Start FE Fail"'
+                }
+            }
+        }
+
     }
 }
