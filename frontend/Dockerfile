@@ -18,12 +18,12 @@ COPY . .
 # build app for production with minification
 RUN npm run build
 
-FROM nginx
-RUN rm -rf /etc/nginx/conf.d/default.conf
-COPY --from=builder ./nginx/default.conf /etc/nginx/conf.d/default.conf
+# FROM nginx
+# RUN rm -rf /etc/nginx/conf.d/default.conf
+# COPY --from=builder ./nginx/default.conf /etc/nginx/conf.d/default.conf
 
-RUN rm-rf /usr/share/nginx/html/*
-COPY --from=builder /app/dist /usr/share/nginx/html
+# RUN rm -rf /usr/share/nginx/html/*
+# COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
-CMD [ "nginx", "-g", "daemon off;"]
+# EXPOSE 80
+# CMD [ "nginx", "-g", "daemon off;"]
