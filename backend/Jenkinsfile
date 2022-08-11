@@ -94,7 +94,7 @@ pipeline {
 
         stage('[FE] Docker stop'){
             steps{
-                sh 'echo "[FE] Prepare'
+                sh 'echo "[FE] Prepare"'
                 dir('frontend'){
                     sh 'docker-compose stop'
                     sh 'docker rm vue'
