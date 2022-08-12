@@ -10,6 +10,8 @@
             alt="img"
           />
         </div>
+
+        
         <div class="col-md-8 col-lg-8">
           <div class="card-body">
             <div id="join">
@@ -55,10 +57,12 @@
       </div>
     </div>
     <div v-if="session" class="container-fluid">
+      
       <div class="row">
         <!-- video 부분 -->
         <div class="v_box">
           <div class="video-box col-6" v-if="session">
+            <div class="videos">
               <!-- video1 -->
               <div class="video">
                 <user-video :stream-manager="mainStreamManager" />
@@ -72,10 +76,12 @@
                   @click="updateMainVideoStreamManager(sub)"
                 />
               </div>
+            </div>
           </div>
           <div class="col-3">
             <div class="card2">
               <!-- 처음 진입시 -->
+              
               <div v-if="!talkStatus && !gameStatus">
                 <div class="card-container">
                   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -267,17 +273,40 @@
     <!-- <button @click="removeFilter"> 필터 취소 </button> -->
     
 <!-- random matching end -->
+                    <div class="a-or-b-game" v-if="abgamestartStatus">
+                        <h3>밸런스 게임</h3>
+                        <h5>당신의 선택은? 신중히 골라주세요!</h5>
+                        <div class="select-box" @click="selectA">
+                           {{A_item}}
+                        </div>
+                        <div class="select-box" @click="selectB">
+                           {{B_item}}
+                        </div>
+                        </div>
+                    <div class="select-result">
+                           <div v-for="(game,index) in gamedata" :key="index">
+                              <div class="select-comment">
+                                 <span>{{game.userId}}님이 {{game.select}}를 선택하셨습니다.</span>
+                              </div>
+                           </div>
+                        </div>   
+                        <div class="next-problem" @click="nextProblem">다음문제</div>
 
     <!--  CatchMind start  -->
     <!-- // 캐치마인드 준비 화면 -->
-		<!-- <div class="" v-if="!startStatus2 && !startStatus" @click="startGame2"> //모든 게임이 실행중이 아닌 경우 -->
+      <!-- <div class="" v-if="!startStatus2 && !startStatus" @click="startGame2"> //모든 게임이 실행중이 아닌 경우 -->
     <!-- 우선 startStatus 하나만 가지고 사용 = runningGameState -->
     <div class="" v-if="!runningGameState" @click="startCatchMind">
-			<div v-if="!isReadyCat" class="start-btn">캐치마인드</div>
-				<div v-else class="start-btn">준비완료</div>
-			</div>      
+         <div v-if="!isReadyCat" class="start-btn">캐치마인드</div>
+            <div v-else class="start-btn">준비완료</div>
+         </div>   
+
       <!-- 캐치마인드 시작 버튼 -->
       <button @click="startCM" v-if="!catchMindStatus && host">시작</button>
+      <button @click="startABGame">
+                      <div v-if="!isReadyBal">밸런스 게임</div>
+                      <div v-else>준비완료</div>
+      </button>
       <div class="draw-box" v-bind:class="{catDis:!catchMindStatus}">
         <!-- <Slider class="time-slider" v-if="catchMindStatus" v-model="countView" :max="60" /> - 이친구는 jquery인듯 돌아가는 게임이 없고 캐치마인드가 시작되었으면 -->
         <input  class="time-slider" type="range" :max="60"  v-if="catchMindStatus" v-model="countView">
@@ -390,7 +419,7 @@ export default {
       color: "black", // 펜 초기 색상
       penSize:2, // 펜 초기 사이즈
       x: 0, // 펜 좌표정보
-			y: 0,// 펜 좌표정보
+         y: 0,// 펜 좌표정보
 // ----------------  Catch mind end
 
 //---------------- catch mind , matching start
@@ -399,6 +428,22 @@ export default {
     matchingTestToken: undefined,
     matchingSessionName: undefined,
 //---------------- catch mind , matching end
+
+// ----------------  ab game start
+
+      abgamestartStatus:true,
+      gamedata:[],
+      A_item_list: ["토맛 토마토","민초","카레맛 똥", "팔만대장경 다 읽기","겨울 에어컨" ,"월 200 백수", "탕수육 부먹"],
+         B_item_list: ["토마토맛 토","반민초","똥맛 카레", "대장내시경 팔만번 하기","여름 히터", "월 500 직장인", "탕수육 찍먹"],
+         A_item:'',
+         B_item:'',
+      nextStatus:false,
+      gIndex:0,
+      gameStart:[],
+      isSelected:false,
+      isReadyBal:false,
+      
+// ----------------  ab game end
     };
   },
   computed: {
@@ -417,7 +462,7 @@ export default {
 
     // 캔버스 초기화
     var c = document.getElementById("myCanvas");
-		this.canvas = c.getContext(`2d`); 
+      this.canvas = c.getContext(`2d`); 
 
 // ----------------  Catch mind end 
   },
@@ -428,30 +473,211 @@ export default {
       this.userHateMbtitList = value;
     },
     startTalk(){
-			this.talkStatus=!this.talkStatus;
-			// this.session.signal({
-			// 	data: this.isReadyBal,
-			// 	to:[],
-			// 	type: 'game-start'
-			// })
+         this.talkStatus=!this.talkStatus;
+         // this.session.signal({
+         //    data: this.isReadyBal,
+         //    to:[],
+         //    type: 'game-start'
+         // })
       console.log(this.talkStatus)
-		},
-		startGame2(){
-			this.isReadyCat=!this.isReadyCat;
-			this.session.signal({
-				data: this.isReadyCat,
-				to:[],
-				type: 'game-start2'
-			})
-		},
+      },
+      startGame2(){
+         this.isReadyCat=!this.isReadyCat;
+         this.session.signal({
+            data: this.isReadyCat,
+            to:[],
+            type: 'game-start2'
+         })
+      },
     vidControll(){
       this.voiceStatus = !this.voiceStatus;
-			this.vidStatus = !this.vidStatus;
+         this.vidStatus = !this.vidStatus;
       this.talkStatus = !this.talkStatus
       this.gameStatus = !this.gameStatus
-			this.publisher.publishVideo(this.vidStatus);
+         this.publisher.publishVideo(this.vidStatus);
       console.log(this.vidStatus)
-		},
+      },
+
+    joinSession() {
+      // --- Get an OpenVidu object ---
+      this.OV = new OpenVidu();
+
+      // --- Init a session ---
+      this.session = this.OV.initSession();
+
+      // --- Specify the actions when events take place in the session ---
+
+      // On every new Stream received...
+      this.session.on("streamCreated", ({ stream }) => {
+        const subscriber = this.session.subscribe(stream);
+        console.log("stream테스트");
+        this.subscribers.push(subscriber);
+      });
+
+      // On every Stream destroyed...
+      this.session.on("streamDestroyed", ({ stream }) => {
+        const index = this.subscribers.indexOf(stream.streamManager, 0);
+        if (index >= 0) {
+          this.subscribers.splice(index, 1);
+        }
+      });
+
+      // ----------------  Catch mind start  
+      this.session.on('signal:catch-start',(event)=>{ // 게임 시작 시그널
+      
+            this.catchMindStatus=true; // 캐치마인드 진행중으로 변경
+            this.count=60; // 시간초 초기화
+            this.myTurn = !this.myTurn; // 그림 그리는 턴 변경
+            let pb = JSON.parse(event.data); // 주어진 문제 파싱 및 변수 등록
+            this.problem = pb.problem;
+            if(this.turn > 4){ // 4턴 이상 진행되면 캐치마인드 종료
+               this.endCM();
+               return;
+            }
+            if(this.myTurn){ // 그림그리기 차례인 경우
+               Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
+               title:"내 차례에요!",
+               showConfirmButton: false,
+                      timer: 1500
+               })
+            }
+            else{
+               Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
+               title:"상대방 차례에요!",
+               showConfirmButton: false,
+                      timer: 1500
+               })
+            }
+         })
+
+      this.session.on('signal:catch-end',(event)=>{ // 게임 종료 시그널
+            let val = JSON.parse(event.data); // 턴수 정보
+            this.turn = val.turn;
+            if(this.timerInit!=null){ // ??? todo
+               clearInterval(this.timerInit); 
+               this.timerInit=null;
+            }
+            this.allDelete(); // 캔버스 초기화
+            if(this.turn>4){ // 진행된 turn이 4 이상인 경우 게임 종료
+               Swal.fire({ // alert 보내기
+               title:"게임 끝!",
+               showConfirmButton: false,
+                      timer: 1500
+               }).then(()=>{
+                  this.catchMindStatus=false; // 게임중 상태 해제
+                  this.turn=1; // 기타 게임 데이터 초기화
+                  this.count=60;
+               })
+               return;
+            }
+            if(this.turn<5){
+               setTimeout(() => {
+                  this.startCM(); // 다음 게임 실행
+               }, 1000);
+            }
+         })
+
+      // 그리기 도구 관련 시그널
+      this.session.on('signal:drawing-opt',(event)=>{ // 그리기 도구 색상 변경 
+            if(event.data=="all"){ // 모두 지우기 이벤트 - allDelete() 
+               this.canvas.clearRect(0, 0, 560, 360);
+            }
+            else if(event.data=="white"){ // 흰색으로 변경 - 지우개
+               this.penSize = 4;
+               this.color = event.data;
+            }
+            else{ // 다른 컬러로 변경
+               this.color = event.data;
+               this.penSize = 2;
+            }
+         })
+
+      // 그리기 관련 시그널 - 마우스 down
+      this.session.on('signal:start-draw',(event)=>{
+            let sm = JSON.parse(event.data);
+            this.x = sm.x;
+            this.y = sm.y;
+            this.isDrawing=sm.isDrawing;
+         })
+      // 그리기 관련 시그널 - 마우스 up, move
+      this.session.on('signal:drawing',(event)=>{
+            let sm = JSON.parse(event.data);
+            this.drawLine(this.x, this.y, sm.x, sm.y, this.color);
+            this.x = sm.x;
+            this.y = sm.y;
+            this.isDrawing=sm.isDrawing;
+         })
+
+      //정답 제출 관련
+      this.session.on('signal:send-answer', (event)=>{
+            let info = JSON.parse(event.data); // name, ans 정보 받기
+            if(this.problem==info.ans){ // 정답인경우
+               Swal.fire({ // alert 메시지
+               title:`${info.name}님이 정답을 맞추셨습니다.`,
+               showConfirmButton: false,
+                      timer: 1500
+               }).then(()=>{   
+                  this.allDelete(); // 캔버스 지우기
+               })
+            }
+         })
+
+      // 타이머
+      this.session.on('signal:timer',(event)=>{
+            this.count = event.data; // count 정보
+            // this.count = +this.count || 0; // 카운트 증가 시키기
+            this.countView =  this.count; // 10초 남은경우 카운트 뷰를 보여줌
+         })
+
+// ----------------  Catch mind end
+
+      // On every asynchronous exception...
+      this.session.on("exception", ({ exception }) => {
+        console.warn(exception);
+      });
+
+      // --- Connect to the session with a valid user token ---
+
+      // 'getToken' method is simulating what your server-side should do.
+      // 'token' parameter should be retrieved and returned by your own backend
+
+      this.getCreateToken(this.mySessionId).then((token) => {
+        console.log("debug - token Info", token);
+        this.session
+          .connect(token, { clientData: this.myUserName })
+          .then(() => {
+            // --- Get your own camera stream with the desired properties ---
+            let publisher = this.OV.initPublisher(undefined, {
+              audioSource: undefined, // The source of audio. If undefined default microphone
+              videoSource: undefined, // The source of video. If undefined default webcam
+              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+              publishVideo: false, // Whether you want to start publishing with your video enabled or not
+              resolution: "640x480", // The resolution of your video
+              frameRate: 30, // The frame rate of your video
+              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+              mirror: false, // Whether to mirror your local video or not
+            });
+
+            this.mainStreamManager = publisher;
+            this.publisher = publisher;
+
+            // --- Publish your stream ---
+
+            this.session.publish(this.publisher);
+
+            this.voiceControll();
+          })
+          .catch((error) => {
+            console.log(
+              "There was an error connecting to the session:",
+              error.code,
+              error.message
+            );
+          });
+      });
+
+      window.addEventListener("beforeunload", this.leaveSession);
+    },
 
     leaveSession() {
       // --- Leave the session by calling 'disconnect' method over the Session object ---
@@ -508,16 +734,16 @@ export default {
         });
     },
   voiceControll(){
-			// this.voiceStatus=!this.voiceStatus;
-			let pitchs = ['0.76', '0.77', '0.78', '0.79', '0.80', '1.3', '1.4', '1.5', '1.6', '1.7']
+         // this.voiceStatus=!this.voiceStatus;
+         let pitchs = ['0.76', '0.77', '0.78', '0.79', '0.80', '1.3', '1.4', '1.5', '1.6', '1.7']
             let pitch = pitchs[8]
-			if(this.voiceStatus){
-				this.publisher.stream.applyFilter("GStreamerFilter", {"command": `pitch pitch=${pitch}`});
-			}
-			else{
-				this.publisher.stream.removeFilter();
-			}
-		},
+         if(this.voiceStatus){
+            this.publisher.stream.applyFilter("GStreamerFilter", {"command": `pitch pitch=${pitch}`});
+         }
+         else{
+            this.publisher.stream.removeFilter();
+         }
+      },
     // 아마도 FaceOverlay 적용하기
     videoControll() {
       this.publisher.stream.applyFilter("FaceOverlayFilter").then((filter) => {
@@ -556,7 +782,7 @@ export default {
     
     // 그림 그리기 시작 - 마우스 클릭시
     beginDrawing(e) {
-		if(!this.myTurn) return;
+      if(!this.myTurn) return;
       this.x = e.offsetX;
       this.y = e.offsetY;
       this.isDrawing = true;
@@ -566,9 +792,9 @@ export default {
         isDrawing : true,
       }; 
       this.session.signal({
-				data: JSON.stringify(sdata),
-				to:[],
-				type: 'start-draw'
+            data: JSON.stringify(sdata),
+            to:[],
+            type: 'start-draw'
       })
     },
 
@@ -607,15 +833,15 @@ export default {
 
     // 그림 지나간 길 표시 - 캔버스에 그림 그리기
     drawLine(x1, y1, x2, y2, color) {
-			let ctx = this.canvas;
-			ctx.beginPath();
-			ctx.strokeStyle = color;
-			ctx.lineWidth = this.penSize;
-			ctx.moveTo(x1, y1);
-			ctx.lineTo(x2, y2);
-			ctx.stroke();
-			ctx.closePath();
-		},
+         let ctx = this.canvas;
+         ctx.beginPath();
+         ctx.strokeStyle = color;
+         ctx.lineWidth = this.penSize;
+         ctx.moveTo(x1, y1);
+         ctx.lineTo(x2, y2);
+         ctx.stroke();
+         ctx.closePath();
+      },
 
     //정답 맞추기 관련
     sendAns(){ // 정답 입력하기 메소드
@@ -771,6 +997,7 @@ export default {
     },
 
     joinSession2() {
+      
       // --- Get an OpenVidu object ---
       this.OV = new OpenVidu();
 
@@ -796,10 +1023,10 @@ export default {
 
 // ----------------  Catch mind start  
         this.session.on('signal:catch-start',(event)=>{ // 게임 시작 시그널 
-				this.catchMindStatus=true; // 캐치마인드 진행중으로 변경
-				this.count=60; // 시간초 초기화
+            this.catchMindStatus=true; // 캐치마인드 진행중으로 변경
+            this.count=60; // 시간초 초기화
         
-				// this.myTurn = !this.myTurn; // 그림 그리는 턴 변경
+            // this.myTurn = !this.myTurn; // 그림 그리는 턴 변경
         console.log("myTurn 1" , this.myTurn + " " + this.turn);
         if(this.matchingSessionName == undefined && this.turn%2==1) this.myTurn = true;
         else if(this.matchingSessionName == undefined && this.turn%2==0) this.myTurn = false;
@@ -807,107 +1034,159 @@ export default {
         else this.myTurn = true;
 
         console.log("myTurn 2" , this.myTurn + " " + this.turn);
-				let pb = JSON.parse(event.data); // 주어진 문제 파싱 및 변수 등록
-				this.problem = pb.problem; 
+            let pb = JSON.parse(event.data); // 주어진 문제 파싱 및 변수 등록
+            this.problem = pb.problem; 
 
-				if(this.turn > 4){ // 4턴 이상 진행되면 캐치마인드 종료
-					this.endCM();
-					return;
-				}
-				if(this.myTurn){ // 그림그리기 차례인 경우
-					Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
-					title:"내 차례에요!",
-					showConfirmButton: false,
+            if(this.turn > 4){ // 4턴 이상 진행되면 캐치마인드 종료
+               this.endCM();
+               return;
+            }
+            if(this.myTurn){ // 그림그리기 차례인 경우
+               Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
+               title:"내 차례에요!",
+               showConfirmButton: false,
                       timer: 1500
-					})
-				}
-				else{
-					Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
-					title:"상대방 차례에요!",
-					showConfirmButton: false,
+               })
+            }
+            else{
+               Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
+               title:"상대방 차례에요!",
+               showConfirmButton: false,
                       timer: 1500
-					})
-				}
-			})
+               })
+            }
+        });
+         // ---------------------- abGame Start
+
+      this.session.on('signal:game-start',(event) => {
+        console.log("빤빵빵빵");
+        console.log(event);
+        
+            if(event.data){
+          console.log("뿡");
+               this.gameStart.push(event.data);
+          console.log(event.data);
+            }
+            else{
+               this.gameStart.pop();
+            }
+            if(this.gameStart.length==2){
+          console.log("뿡뿡뿡");
+               this.startStatus=true;
+               this.A_item = this.A_item_list[this.gIndex];
+               this.B_item = this.B_item_list[this.gIndex];
+            }
+         })
+
+      this.session.on('signal:my-game', (event) => {
+            this.gamedata.push(JSON.parse(event.data));
+            if(this.gamedata.length==2){
+               this.nextStatus=true;
+            }
+         });
+
+      this.session.on('signal:game-next',() =>{ 
+        
+            if(this.gamedata.length==2){
+               if(this.gIndex<this.A_item_list.length-1){
+                  this.nextStatus=false;
+                  this.isSelected=false;
+                  this.gIndex++;
+                  this.A_item = this.A_item_list[this.gIndex];
+                  this.B_item = this.B_item_list[this.gIndex];
+                  this.gamedata=[];
+               }
+               else{
+                  Swal.fire('밸런스 게임 종료!');
+                  this.gameStart=[];
+                  this.gamedata=[];
+                  this.startStatus = false;
+                  this.isReadyBal = false;
+                  this.gIndex=0;
+               }
+            }
+         });
+      // ---------------------- abGame End
+         
 
       this.session.on('signal:catch-end',(event)=>{ // 게임 종료 시그널
-				let val = JSON.parse(event.data); // 턴수 정보
-				this.turn = val.turn;
-				if(this.timerInit!=null){ // ??? todo
-					clearInterval(this.timerInit); 
-					this.timerInit=null;
-				}
-				this.allDelete(); // 캔버스 초기화
-				if(this.turn>4){ // 진행된 turn이 4 이상인 경우 게임 종료
-					Swal.fire({ // alert 보내기
-					title:"게임 끝!",
-					showConfirmButton: false,
+            let val = JSON.parse(event.data); // 턴수 정보
+            this.turn = val.turn;
+            if(this.timerInit!=null){ // ??? todo
+               clearInterval(this.timerInit); 
+               this.timerInit=null;
+            }
+            this.allDelete(); // 캔버스 초기화
+            if(this.turn>4){ // 진행된 turn이 4 이상인 경우 게임 종료
+               Swal.fire({ // alert 보내기
+               title:"게임 끝!",
+               showConfirmButton: false,
                       timer: 1500
-					}).then(()=>{
-						this.catchMindStatus=false; // 게임중 상태 해제
-						this.turn=1; // 기타 게임 데이터 초기화
-						this.count=60;
-					})
-					return;
-				}
-				if(this.turn<5){
-					setTimeout(() => {
-						this.startCM(); // 다음 게임 실행
-					}, 1000);
-				}
-			})
+               }).then(()=>{
+                  this.catchMindStatus=false; // 게임중 상태 해제
+                  this.turn=1; // 기타 게임 데이터 초기화
+                  this.count=60;
+               })
+               return;
+            }
+            if(this.turn<5){
+               setTimeout(() => {
+                  this.startCM(); // 다음 게임 실행
+               }, 1000);
+            }
+         })
 
       // 그리기 도구 관련 시그널
       this.session.on('signal:drawing-opt',(event)=>{ // 그리기 도구 색상 변경 
-				if(event.data=="all"){ // 모두 지우기 이벤트 - allDelete() 
-					this.canvas.clearRect(0, 0, 560, 360);
-				}
-				else if(event.data=="white"){ // 흰색으로 변경 - 지우개
-					this.penSize = 4;
-					this.color = event.data;
-				}
-				else{ // 다른 컬러로 변경
-					this.color = event.data;
-					this.penSize = 2;
-				}
-			})
+            if(event.data=="all"){ // 모두 지우기 이벤트 - allDelete() 
+               this.canvas.clearRect(0, 0, 560, 360);
+            }
+            else if(event.data=="white"){ // 흰색으로 변경 - 지우개
+               this.penSize = 4;
+               this.color = event.data;
+            }
+            else{ // 다른 컬러로 변경
+               this.color = event.data;
+               this.penSize = 2;
+            }
+         })
 
       // 그리기 관련 시그널 - 마우스 down
       this.session.on('signal:start-draw',(event)=>{
-				let sm = JSON.parse(event.data);
-				this.x = sm.x;
-				this.y = sm.y;
-				this.isDrawing=sm.isDrawing;
-			})
+            let sm = JSON.parse(event.data);
+            this.x = sm.x;
+            this.y = sm.y;
+            this.isDrawing=sm.isDrawing;
+         })
       // 그리기 관련 시그널 - 마우스 up, move
       this.session.on('signal:drawing',(event)=>{
-				let sm = JSON.parse(event.data);
-				this.drawLine(this.x, this.y, sm.x, sm.y, this.color);
-				this.x = sm.x;
-				this.y = sm.y;
-				this.isDrawing=sm.isDrawing;
-			})
+            let sm = JSON.parse(event.data);
+            this.drawLine(this.x, this.y, sm.x, sm.y, this.color);
+            this.x = sm.x;
+            this.y = sm.y;
+            this.isDrawing=sm.isDrawing;
+         })
 
       //정답 제출 관련
       this.session.on('signal:send-answer', (event)=>{
-				let info = JSON.parse(event.data); // name, ans 정보 받기
-				if(this.problem==info.ans){ // 정답인경우
-					Swal.fire({ // alert 메시지
-					title:`${info.name}님이 정답을 맞추셨습니다.`,
-					showConfirmButton: false,
+            let info = JSON.parse(event.data); // name, ans 정보 받기
+            if(this.problem==info.ans){ // 정답인경우
+               Swal.fire({ // alert 메시지
+               title:`${info.name}님이 정답을 맞추셨습니다.`,
+               showConfirmButton: false,
                       timer: 1500
-					}).then(()=>{	
-						this.allDelete(); // 캔버스 지우기
-					})
-				}
-			})
+               }).then(()=>{   
+                  this.allDelete(); // 캔버스 지우기
+               })
+            }
+         })
 
       // 타이머
       this.session.on('signal:timer',(event)=>{
-				this.count = event.data; // count 정보
-				// this.count = +this.count || 0; // 카운트 증가 시키기
-				this.countView =  this.count; // 10초 남은경우 카운트 뷰를 보여줌
-			})
+            this.count = event.data; // count 정보
+            // this.count = +this.count || 0; // 카운트 증가 시키기
+            this.countView =  this.count; // 10초 남은경우 카운트 뷰를 보여줌
+         })
 
       // ----------------  Catch mind end
 
@@ -932,7 +1211,7 @@ export default {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: "480x320", // The resolution of your video
+              resolution: "640x480", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -956,7 +1235,66 @@ export default {
             );
           });    
       window.addEventListener("beforeunload", this.leaveSession);
-    } 
+    },
+     // ---------------- abgame Start
+
+    startABGame(){ // 밸런스게임 시작
+      console.log("-----뿡뿡");
+         this.isReadyBal=!this.isReadyBal;
+         this.session.signal({
+            data: this.isReadyBal,
+            to:[],
+            type: 'game-start'
+         })
+      },
+    nextProblem(){
+         if(!this.nextStatus && this.isSelected){ 
+            Swal.fire('상대방이 선택하지 않았습니다')
+            return;
+         }
+         else if(!this.nextStatus && !this.isSelected){
+            Swal.fire('둘 중 하나를 선택해 주세요 ✅')
+         }
+         this.nextStatus=false;
+         this.isSelected=false;
+
+         this.session.signal({
+            data: "next",
+            to:[],
+            type: 'game-next'
+         })
+         
+      },
+    selectA(){
+         if(this.isSelected) return;
+         this.isSelected = true;
+         const sdata = {
+            userId : this.myUserName,
+            select : this.A_item,
+         };
+         
+         this.session.signal({
+            data: JSON.stringify(sdata),
+            to:[],
+            type: 'my-game'
+         })
+      },
+      selectB(){
+         if(this.isSelected) return;
+         this.isSelected = true;
+         const sdata = {
+            userId : this.myUserName,
+            select : this.B_item,
+         };
+         
+         this.session.signal({
+            data: JSON.stringify(sdata),
+            to:[],
+            type: 'my-game'
+         })
+         
+      },
+    // ---------------- abgame End
   },
 };
 </script>
@@ -1006,8 +1344,8 @@ export default {
   /* background: #f0f2f5; */
 }
 .video {
-  width: 200px;
-  height: 200px;
+  width: 50%;
+  height: 100%;
   margin: 3px;
 }
 
@@ -1094,6 +1432,47 @@ export default {
 }
 
 .catDis{
-	visibility: hidden;
+   visibility: hidden;
+}
+
+
+/* Balance Game */
+.select-box {
+   padding: 5%;
+   margin: 5%;
+  color: #37474f;
+   background: white;
+   font-weight: bold;
+   border-radius: 5px;
+}
+.select-box:hover{
+   transform: scale(1.1);
+   cursor: pointer;
+   border: 1px solid #ff4e7e;
+}
+
+.select-comment {
+   border: 2px solid #ff4e7e;
+   font-size: 12px;
+   font-weight: bold;
+   padding: 5px;
+   border-radius: 5px;
+   margin: 5%;
+}
+
+.next-problem {
+   width: 80%;
+   margin: 10% auto;
+   padding: 3%;
+   border: 2px solid #323545;
+   background: #fff;
+   border-radius: 5px;
+   color: #323545;
+   font-weight: bold;
+}
+.next-problem:hover {
+   cursor: pointer;
+   color: #ff4e7e;
+   border: 2px solid #ff4e7e;
 }
 </style>
