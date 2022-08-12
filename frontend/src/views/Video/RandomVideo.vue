@@ -59,7 +59,6 @@
         <!-- video 부분 -->
         <div class="v_box">
           <div class="video-box col-6" v-if="session">
-            <div class="videos">
               <!-- video1 -->
               <div class="video">
                 <user-video :stream-manager="mainStreamManager" />
@@ -73,7 +72,6 @@
                   @click="updateMainVideoStreamManager(sub)"
                 />
               </div>
-            </div>
           </div>
           <div class="col-3">
             <div class="card2">
@@ -454,187 +452,6 @@ export default {
 			this.publisher.publishVideo(this.vidStatus);
       console.log(this.vidStatus)
 		},
-
-    joinSession() {
-      // --- Get an OpenVidu object ---
-      this.OV = new OpenVidu();
-
-      // --- Init a session ---
-      this.session = this.OV.initSession();
-
-      // --- Specify the actions when events take place in the session ---
-
-      // On every new Stream received...
-      this.session.on("streamCreated", ({ stream }) => {
-        const subscriber = this.session.subscribe(stream);
-        console.log("stream테스트");
-        this.subscribers.push(subscriber);
-      });
-
-      // On every Stream destroyed...
-      this.session.on("streamDestroyed", ({ stream }) => {
-        const index = this.subscribers.indexOf(stream.streamManager, 0);
-        if (index >= 0) {
-          this.subscribers.splice(index, 1);
-        }
-      });
-
-      // ----------------  Catch mind start  
-      this.session.on('signal:catch-start',(event)=>{ // 게임 시작 시그널
-      
-				this.catchMindStatus=true; // 캐치마인드 진행중으로 변경
-				this.count=60; // 시간초 초기화
-				this.myTurn = !this.myTurn; // 그림 그리는 턴 변경
-				let pb = JSON.parse(event.data); // 주어진 문제 파싱 및 변수 등록
-				this.problem = pb.problem;
-				if(this.turn > 4){ // 4턴 이상 진행되면 캐치마인드 종료
-					this.endCM();
-					return;
-				}
-				if(this.myTurn){ // 그림그리기 차례인 경우
-					Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
-					title:"내 차례에요!",
-					showConfirmButton: false,
-                      timer: 1500
-					})
-				}
-				else{
-					Swal.fire({ //alert 메시지 보내기 //import Swal from 'sweetalert2'; 추가 필요
-					title:"상대방 차례에요!",
-					showConfirmButton: false,
-                      timer: 1500
-					})
-				}
-			})
-
-      this.session.on('signal:catch-end',(event)=>{ // 게임 종료 시그널
-				let val = JSON.parse(event.data); // 턴수 정보
-				this.turn = val.turn;
-				if(this.timerInit!=null){ // ??? todo
-					clearInterval(this.timerInit); 
-					this.timerInit=null;
-				}
-				this.allDelete(); // 캔버스 초기화
-				if(this.turn>4){ // 진행된 turn이 4 이상인 경우 게임 종료
-					Swal.fire({ // alert 보내기
-					title:"게임 끝!",
-					showConfirmButton: false,
-                      timer: 1500
-					}).then(()=>{
-						this.catchMindStatus=false; // 게임중 상태 해제
-						this.turn=1; // 기타 게임 데이터 초기화
-						this.count=60;
-					})
-					return;
-				}
-				if(this.turn<5){
-					setTimeout(() => {
-						this.startCM(); // 다음 게임 실행
-					}, 1000);
-				}
-			})
-
-      // 그리기 도구 관련 시그널
-      this.session.on('signal:drawing-opt',(event)=>{ // 그리기 도구 색상 변경 
-				if(event.data=="all"){ // 모두 지우기 이벤트 - allDelete() 
-					this.canvas.clearRect(0, 0, 560, 360);
-				}
-				else if(event.data=="white"){ // 흰색으로 변경 - 지우개
-					this.penSize = 4;
-					this.color = event.data;
-				}
-				else{ // 다른 컬러로 변경
-					this.color = event.data;
-					this.penSize = 2;
-				}
-			})
-
-      // 그리기 관련 시그널 - 마우스 down
-      this.session.on('signal:start-draw',(event)=>{
-				let sm = JSON.parse(event.data);
-				this.x = sm.x;
-				this.y = sm.y;
-				this.isDrawing=sm.isDrawing;
-			})
-      // 그리기 관련 시그널 - 마우스 up, move
-      this.session.on('signal:drawing',(event)=>{
-				let sm = JSON.parse(event.data);
-				this.drawLine(this.x, this.y, sm.x, sm.y, this.color);
-				this.x = sm.x;
-				this.y = sm.y;
-				this.isDrawing=sm.isDrawing;
-			})
-
-      //정답 제출 관련
-      this.session.on('signal:send-answer', (event)=>{
-				let info = JSON.parse(event.data); // name, ans 정보 받기
-				if(this.problem==info.ans){ // 정답인경우
-					Swal.fire({ // alert 메시지
-					title:`${info.name}님이 정답을 맞추셨습니다.`,
-					showConfirmButton: false,
-                      timer: 1500
-					}).then(()=>{	
-						this.allDelete(); // 캔버스 지우기
-					})
-				}
-			})
-
-      // 타이머
-      this.session.on('signal:timer',(event)=>{
-				this.count = event.data; // count 정보
-				// this.count = +this.count || 0; // 카운트 증가 시키기
-				this.countView =  this.count; // 10초 남은경우 카운트 뷰를 보여줌
-			})
-
-// ----------------  Catch mind end
-
-      // On every asynchronous exception...
-      this.session.on("exception", ({ exception }) => {
-        console.warn(exception);
-      });
-
-      // --- Connect to the session with a valid user token ---
-
-      // 'getToken' method is simulating what your server-side should do.
-      // 'token' parameter should be retrieved and returned by your own backend
-
-      this.getCreateToken(this.mySessionId).then((token) => {
-        console.log("debug - token Info", token);
-        this.session
-          .connect(token, { clientData: this.myUserName })
-          .then(() => {
-            // --- Get your own camera stream with the desired properties ---
-            let publisher = this.OV.initPublisher(undefined, {
-              audioSource: undefined, // The source of audio. If undefined default microphone
-              videoSource: undefined, // The source of video. If undefined default webcam
-              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
-              publishVideo: false, // Whether you want to start publishing with your video enabled or not
-              resolution: "640x480", // The resolution of your video
-              frameRate: 30, // The frame rate of your video
-              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
-              mirror: false, // Whether to mirror your local video or not
-            });
-
-            this.mainStreamManager = publisher;
-            this.publisher = publisher;
-
-            // --- Publish your stream ---
-
-            this.session.publish(this.publisher);
-
-            this.voiceControll();
-          })
-          .catch((error) => {
-            console.log(
-              "There was an error connecting to the session:",
-              error.code,
-              error.message
-            );
-          });
-      });
-
-      window.addEventListener("beforeunload", this.leaveSession);
-    },
 
     leaveSession() {
       // --- Leave the session by calling 'disconnect' method over the Session object ---
@@ -1115,7 +932,7 @@ export default {
               videoSource: undefined, // The source of video. If undefined default webcam
               publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
               publishVideo: true, // Whether you want to start publishing with your video enabled or not
-              resolution: "640x480", // The resolution of your video
+              resolution: "480x320", // The resolution of your video
               frameRate: 30, // The frame rate of your video
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
@@ -1189,8 +1006,8 @@ export default {
   /* background: #f0f2f5; */
 }
 .video {
-  width: 50%;
-  height: 100%;
+  width: 200px;
+  height: 200px;
   margin: 3px;
 }
 
