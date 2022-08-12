@@ -5,7 +5,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 sh 'echo "Clonning Repository"'
-                git branch: 'feature-back/ec2',
+                git branch: 'feature-back/rollback',
                     url: 'https://lab.ssafy.com/s07-webmobile1-sub2/S07P12B206.git',
                     credentialsId: 'IDPW'
             }
