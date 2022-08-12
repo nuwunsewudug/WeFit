@@ -1,0 +1,55 @@
+spring:
+  # MySQL
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${mysql.url}
+    username: ${mysql.username}
+    password: ${mysql.password}
+#    sql-script-encoding: utf-8
+
+  #Email
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email.address}
+    password: ${email.password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
+  # JPA
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+#    defer-datasource-initialization: true
+
+  # RedisConfig
+  redis:
+    host: ${redis.host}
+    port: 6379
+
+  sql:
+    init:
+      mode: embedded
+      encoding: UTF-8
+
+# JWT
+jwt:
+  header: Authorization
+  secret: ${env.jwt.secret}
+  token-validity-in-seconds: 10000 #1?
+
+# openvidu
+openvidu:
+  url: https://i7b206.p.ssafy.io:8443/
+  secret: MY_SECRET
