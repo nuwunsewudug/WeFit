@@ -273,24 +273,29 @@
     <!-- <button @click="removeFilter"> 필터 취소 </button> -->
     
 <!-- random matching end -->
-                    <div class="a-or-b-game" v-if="abgamestartStatus">
-                        <h3>밸런스 게임</h3>
-                        <h5>당신의 선택은? 신중히 골라주세요!</h5>
-                        <div class="select-box" @click="selectA">
-                           {{A_item}}
-                        </div>
-                        <div class="select-box" @click="selectB">
-                           {{B_item}}
-                        </div>
-                        </div>
-                    <div class="select-result">
-                           <div v-for="(game,index) in gamedata" :key="index">
-                              <div class="select-comment">
-                                 <span>{{game.userId}}님이 {{game.select}}를 선택하셨습니다.</span>
-                              </div>
-                           </div>
-                        </div>   
-                        <div class="next-problem" @click="nextProblem">다음문제</div>
+
+<!-- 밸런스 게임 -->
+        <div v-if="session && abgamestartStatus && !talkStatus">    
+          <div class="a-or-b-game">
+              <h3>밸런스 게임</h3>
+              <h5>당신의 선택은? 신중히 골라주세요!</h5>
+              <div class="select-box" @click="selectA">
+                  {{A_item}}
+              </div>
+              <div class="select-box" @click="selectB">
+                  {{B_item}}
+              </div>
+              </div>
+          <div class="select-result">
+                  <div v-for="(game,index) in gamedata" :key="index">
+                    <div class="select-comment">
+                        <span>{{game.userId}}님이 {{game.select}}를 선택하셨습니다.</span>
+                    </div>
+                  </div>
+              </div>   
+          <div class="next-problem" @click="nextProblem">다음문제</div>
+        </div>
+<!-- 밸런스게임 끝 -->
 
     <!--  CatchMind start  -->
     <!-- // 캐치마인드 준비 화면 -->
