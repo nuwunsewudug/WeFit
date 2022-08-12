@@ -17,10 +17,10 @@
           <a class="nav-link active" aria-current="page" href="#">방 만들기</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
+        <form class="d-flex" role="search">
         <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
-        <button class="btn btn-outline-success mx-3" type="submit">Logout</button>
-        <router-link :to="{name:''}" class="btn btn-outline-success"><v-btn class="mx-1" dark>Profile</v-btn></router-link>
+        <button class="btn btn-outline-success mx-3" @click.prevent="submit">Logout</button>
+        <router-link :to="{name:'ProfileView'}" class="btn btn-outline-success"><v-btn class="mx-1" dark>Profile</v-btn></router-link>
       </form>
     </div>
   </div>
@@ -29,8 +29,14 @@
 
 <script>
 export default {
-  name: 'MainNavbar'
+  name: 'MainNavbar',
+  methods: {
+    submit(){
+      this.$store.dispatch('logout')
+    }
+  },
 }
+
 </script>
 
 <style>
